@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/bkg_driver"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/driver_order_view"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginStart="16dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="16dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.3">
+
+        <EditText
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:ems="10"
+            android:id="@+id/driver_order_input"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:hint="Order Number"
+            android:background="@color/text_color"
+            android:layout_width="250dp"
+            android:textAppearance="@style/TextAppearance.AppCompat"
+            android:textSize="24sp"
+            android:padding="10dp"
+
+            android:fontFamily="sans-serif-condensed"
+            android:textAlignment="center" />
+
+        <TextView
+            android:text="Provide Tracking"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/driver_tracking_btn"
+            android:clickable="true"
+            android:padding="12dp"
+            android:layout_marginTop="10dp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:background="@color/bkg_user"
+            android:fontFamily="sans-serif-condensed"
+            android:textColor="@color/text_color"
+            android:textSize="20sp" />
+
+    </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/driver_view_map"
+        android:visibility="gone"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <fragment
+            android:id="@+id/driver_google_map"
+            android:layout_marginTop="0dp"
+            android:name="com.google.android.gms.maps.SupportMapFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+    </FrameLayout>
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/driver_info_view"
+        android:background="@color/bkg_info"
+        app:layout_constraintLeft_toLeftOf="@+id/driver_view_map"
+        app:layout_constraintRight_toRightOf="@+id/driver_view_map"
+        app:layout_constraintBottom_toBottomOf="@+id/driver_view_map">
+
+        <TextView
+            android:text="New Order"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/driver_new_tracking"
+            android:fontFamily="sans-serif-condensed"
+            android:textColor="@color/text_color"
+            android:textSize="18sp"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:background="@color/bkg_user"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:paddingRight="15dp"
+            android:paddingLeft="15dp"
+            android:clickable="true"
+            android:layout_marginEnd="16dp" />
+
+        <TextView
+            android:text="Location: 76.45454,-45.67789"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/drvier_location_txt"
+            android:textColor="@color/text_color"
+            android:fontFamily="sans-serif-condensed"
+            android:textSize="18sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="24dp"
+            android:layout_marginStart="24dp" />
+
+        <TextView
+            android:text="11 Dec, 2016 12:232;00 PM"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/driver_date_info"
+            android:fontFamily="sans-serif-condensed"
+            android:textSize="16sp"
+            android:textColor="@color/text_color"
+            app:layout_constraintTop_toBottomOf="@+id/drvier_location_txt"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="@+id/drvier_location_txt"
+            android:layout_marginBottom="24dp"
+            android:layout_marginTop="2dp" />
+
+    </android.support.constraint.ConstraintLayout>
+
+    <TextView
+        android:text="Cara driver tracking require access to device location for tracking order. Please go to System Setting and Enable Location Access for Cara App to use as Driver mode."
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:visibility="gone"
+        android:id="@+id/driver_warning_txt"
+        android:textSize="18sp"
+        android:fontFamily="sans-serif-condensed"
+        android:textColor="@color/text_color"
+        android:gravity="center"
+        android:padding="30dp"
+        app:layout_constraintRight_toRightOf="@+id/driver_view_map"
+        app:layout_constraintLeft_toLeftOf="@+id/driver_view_map"
+        app:layout_constraintBottom_toBottomOf="@+id/driver_view_map"
+        app:layout_constraintTop_toTopOf="@+id/driver_view_map" />
+
+    <TextView
+        android:text="TextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/driver_input_error"
+        app:layout_constraintTop_toBottomOf="@+id/driver_order_view"
+        app:layout_constraintLeft_toLeftOf="@+id/driver_view_map"
+        app:layout_constraintRight_toRightOf="@+id/driver_view_map"
+        android:fontFamily="sans-serif-condensed"
+        android:textSize="17sp"
+        android:visibility="gone"
+        android:textColor="@color/colorAccent" />
+
+    <TextView
+        android:text="Please provide internet connection to update data."
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:id="@+id/driver_error"
+        android:textSize="16sp"
+        android:fontFamily="sans-serif-condensed"
+        android:textColor="@color/text_color"
+        android:textAlignment="center"
+        android:background="@color/bkg_wait"
+        android:gravity="center"
+        app:layout_constraintBottom_toBottomOf="@+id/driver_view_map"
+        app:layout_constraintTop_toTopOf="@+id/driver_view_map"
+        app:layout_constraintRight_toRightOf="@+id/driver_view_map"
+        app:layout_constraintLeft_toLeftOf="@+id/driver_view_map" />
+</android.support.constraint.ConstraintLayout>
