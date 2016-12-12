@@ -2,6 +2,7 @@ package com.nexttapp.cara;
 
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -32,21 +33,36 @@ public class MainActivity extends AppCompatActivity {
 
         Dexter.initialize(this);
 
-        Config.api = new APIManager();
+        if (Config.api == null) Config.api = new APIManager();
 
-        loadController(new UserPicker(), "userpicker");
+        switch (Config.curView) {
+            case 1:
+                loadCustomer();
+                break;
+            case 2:
+                loadDriver();
+                break;
+            default:
+                loadPicker();
+                break;
+        }
+
     }
 
 
     public void loadCustomer() {
+        Config.curView = 1;
         loadController(new Customer(), "customer");
     }
 
     public void loadDriver() {
+        Config.curView = 2;
         loadController(new Driver(), "driver");
     }
 
     private void loadPicker() {
+        Config.curView = 0;
+        loadController(new UserPicker(), "userpicker");
     }
 
     private void loadController(BaseController controller, String id) {

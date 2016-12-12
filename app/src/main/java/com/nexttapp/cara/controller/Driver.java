@@ -83,10 +83,20 @@ public class Driver extends BaseController {
     @Override
     protected void render() {
         networkError.setVisibility(View.GONE);
+
+        getMap(R.id.driver_google_map);
+
         networkCheck();
-        showInput();
+        if (Config.orderID.isEmpty()) {
+            showInput();
+        } else {
+            updateMap(null);
+        }
+
+
         if (Config.hasPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION)) {
             if (locationManager == null) locationManager = new LocationManager(getContext());
+            loadMapView();
             return;
         }
 
@@ -96,6 +106,7 @@ public class Driver extends BaseController {
             @Override
             public void onPermissionGranted(PermissionGrantedResponse response) {
                 locationManager = new LocationManager(getContext());
+                loadMapView();
             }
 
             @Override
@@ -110,14 +121,24 @@ public class Driver extends BaseController {
         }, Manifest.permission.ACCESS_FINE_LOCATION);
     }
 
+    private void loadMapView() {
+        if (!Config.orderID.isEmpty() && curLoc == null && locationManager != null) getTracking();
+    }
+
     @Override
     public void onPause() {
         super.onPause();
 //        stopUpdate();
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        stopUpdate();
+    }
+
     private void showInput() {
-        orderID = "";
+        Config.orderID = "";
         checkOrder = false;
         isMapShow = false;
         orderNum.setEnabled(true);
@@ -127,7 +148,7 @@ public class Driver extends BaseController {
         infoView.setVisibility(View.GONE);
         warning.setVisibility(View.GONE);
 
-        getMap(R.id.driver_google_map);
+
     }
 
     private void failPermission() {
@@ -149,7 +170,7 @@ public class Driver extends BaseController {
         inputError.setVisibility(View.GONE);
         checkOrder = true;
         orderNum.setEnabled(false);
-        orderID = num;
+        Config.orderID = num;
         getTracking();
     }
 
@@ -168,7 +189,10 @@ public class Driver extends BaseController {
             warning.setVisibility(View.GONE);
         }
 
-        if (curLoc == null) return;
+        if (curLoc == null) {
+//            getTracking();
+            return;
+        }
         String t = "Location: " + String.format("%.6f",curLoc.latitude) + "," + String.format("%.6f",curLoc.longitude);
         locationTxt.setText(t);
         dateTxt.setText(getDate());
@@ -190,7 +214,7 @@ public class Driver extends BaseController {
 //        lon += 0.0006;
 
         if (curLoc != null) {
-            Config.api.submitLocale(orderID, curLoc.latitude, curLoc.longitude, submitLocationResponseCallback);
+            Config.api.submitLocale(Config.orderID, curLoc.latitude, curLoc.longitude, submitLocationResponseCallback);
         }
 
     }

@@ -14,7 +14,8 @@ public class Config {
 
     public static APIManager api;
     public static String orderID = "";
-    public static String oderDate = "";
+    public static String orderDate = "";
+    public static int curView = 0;
 
     public static boolean hasPermission(final Context context, String permission) {
         if (ActivityCompat.checkSelfPermission(context, permission) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(context, permission) != PackageManager.PERMISSION_GRANTED) {

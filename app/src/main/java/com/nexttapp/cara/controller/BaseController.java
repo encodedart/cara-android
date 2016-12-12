@@ -41,7 +41,7 @@ public abstract class BaseController extends Fragment implements OnMapReadyCallb
 
     protected ViewGroup rootView;
     protected long waitUpdate = 5000;
-    protected String orderID = "";
+//    protected String orderID = "";
     private CountDownTimer timer;
     protected GoogleMap map = null;
     protected BitmapDescriptor selectIcon = null;

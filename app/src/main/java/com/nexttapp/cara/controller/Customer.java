@@ -78,8 +78,11 @@ public class Customer extends BaseController  {
 
     @Override
     protected void render() {
-        setPlaceOrder();
+
         getMap(R.id.google_map);
+
+        renderTracking();
+
         networkError.setVisibility(View.GONE);
         networkCheck();
     }
@@ -109,7 +112,7 @@ public class Customer extends BaseController  {
     @Override
     protected void resumeRender() {
         super.resumeRender();
-        if (!orderID.isEmpty()) getTracking();
+        if (!Config.orderID.isEmpty()) getTracking();
     }
 
     @Override
@@ -119,7 +122,7 @@ public class Customer extends BaseController  {
     }
 
     private void setPlaceOrder() {
-        orderID = "";
+        Config.orderID = "";
         isGettingOrder = true;
         placeOrder.setVisibility(View.VISIBLE);
         wait.setVisibility(View.GONE);
@@ -129,7 +132,7 @@ public class Customer extends BaseController  {
     }
 
     private void renderTracking() {
-        if (orderID.isEmpty()) {
+        if (Config.orderID.isEmpty()) {
             setPlaceOrder();
             return;
         }
@@ -141,7 +144,7 @@ public class Customer extends BaseController  {
         userInfoView.setVisibility(View.VISIBLE);
         wait.setVisibility(View.VISIBLE);
 
-        orderNum.setText("Order: #" + orderID);
+        orderNum.setText("Order: #" + Config.orderID);
         orderDate.setText(getDate());
 
         getTracking();
@@ -151,7 +154,7 @@ public class Customer extends BaseController  {
 
     @Override
     protected void getTracking() {
-        Config.api.getOrderTracking(orderID, trackOrderResponseCallback);
+        Config.api.getOrderTracking(Config.orderID, trackOrderResponseCallback);
     }
 
     private void updateTracking() {
@@ -201,7 +204,7 @@ public class Customer extends BaseController  {
         @Override
         public void onResponse(Call<CreateOrderResponse> call, Response<CreateOrderResponse> response) {
             if (response != null && response.body() != null) {
-                orderID = response.body().orderID;
+                Config.orderID = response.body().orderID;
                 renderTracking();
             }
         }
