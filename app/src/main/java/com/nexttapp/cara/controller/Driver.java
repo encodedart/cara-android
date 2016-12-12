@@ -85,6 +85,13 @@ public class Driver extends BaseController {
         networkError.setVisibility(View.GONE);
         networkCheck();
         showInput();
+        if (Config.hasPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION)) {
+            if (locationManager == null) locationManager = new LocationManager(getContext());
+            return;
+        }
+
+        if (Dexter.isRequestOngoing()) return;
+
         Dexter.checkPermission(new PermissionListener() {
             @Override
             public void onPermissionGranted(PermissionGrantedResponse response) {
