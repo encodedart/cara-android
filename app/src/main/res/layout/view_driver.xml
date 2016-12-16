@@ -175,4 +175,22 @@
         app:layout_constraintTop_toTopOf="@+id/driver_view_map"
         app:layout_constraintRight_toRightOf="@+id/driver_view_map"
         app:layout_constraintLeft_toLeftOf="@+id/driver_view_map" />
+
+    <TextView
+        android:text="SIM OFF"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/bkg_user"
+        android:padding="10dp"
+        android:alpha="0.7"
+        android:clickable="true"
+        android:textAllCaps="true"
+        android:id="@+id/driver_sim_btn"
+        android:fontFamily="sans-serif-condensed"
+        android:textSize="18sp"
+        android:textColor="@color/text_color"
+        app:layout_constraintTop_toTopOf="@+id/driver_view_map"
+        android:layout_marginTop="16dp"
+        app:layout_constraintRight_toRightOf="@+id/driver_view_map"
+        android:layout_marginEnd="16dp" />
 </android.support.constraint.ConstraintLayout>

@@ -17,6 +17,8 @@ import com.nexttapp.cara.LocationManager;
 import com.nexttapp.cara.R;
 import com.nexttapp.cara.models.SubmitLocationResponse;
 
+import java.util.Random;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -49,6 +51,8 @@ public class Driver extends BaseController {
     protected TextView  dateTxt;
     @BindView(R.id.driver_error)
     protected TextView networkError;
+    @BindView(R.id.driver_sim_btn)
+    protected TextView simBtn;
 
     private boolean checkOrder = false;
     private LocationManager locationManager;
@@ -57,6 +61,7 @@ public class Driver extends BaseController {
 
     private double lat = 43.849869;
     private double lon = -79.510986;
+    private boolean isSim = false;
 
     @Override
     protected int getLayoutID() {
@@ -193,12 +198,22 @@ public class Driver extends BaseController {
 //            getTracking();
             return;
         }
-        String t = "Location: " + String.format("%.6f",curLoc.latitude) + "," + String.format("%.6f",curLoc.longitude);
+        String t = String.format("%.6f",curLoc.latitude) + "," + String.format("%.6f",curLoc.longitude);
         locationTxt.setText(t);
         dateTxt.setText(getDate());
 
         updateMaker(curLoc);
 //        zoomToLocation(curLoc);
+    }
+
+    @OnClick(R.id.driver_sim_btn)
+    public void onSimSwitch() {
+        isSim = !isSim;
+        if (isSim) {
+            simBtn.setText("sim on");
+        } else {
+            simBtn.setText("sim off");
+        }
     }
 
     @Override
@@ -209,9 +224,16 @@ public class Driver extends BaseController {
             failPermission();
         }
         curLoc = locationManager.getCurrentLocation();
-//        curLoc = new LatLng(lat,lon);
-//        lat += 0.0008;
-//        lon += 0.0006;
+        if (isSim) {
+            curLoc = new LatLng(lat, lon);
+            Random r = new Random();
+            int i1 = r.nextInt(10);
+            i1 = (i1 % 2 == 0) ? 1 : -1;
+            lat += 0.0008 * i1;
+            i1 = r.nextInt(10);
+            i1 = (i1 % 2 == 0) ? 1 : -1;
+            lon += 0.0006 * i1;
+        }
 
         if (curLoc != null) {
             Config.api.submitLocale(Config.orderID, curLoc.latitude, curLoc.longitude, submitLocationResponseCallback);
